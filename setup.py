@@ -1,7 +1,7 @@
 from setuptools import find_packages, setup
 
 setup(
-    name="sphinx-diagram",
+    name="sphinx-diagrams",
     version="0.0.0",
     description="",
     zip_safe=False,

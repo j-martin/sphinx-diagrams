@@ -217,8 +217,7 @@ class SphinxDiagram:
         self.diagram = Diagram(title, **_kwargs)
 
     def __exit__(self, type, value, traceback):
-        self.diagram.render()
+        self.diagram.__exit__(type, value, traceback)
 
     def __enter__(self):
-        setdiagram(self.diagram)
-        return self.diagram
+        return self.diagram.__enter__()

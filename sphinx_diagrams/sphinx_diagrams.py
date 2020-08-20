@@ -202,10 +202,7 @@ def setup(app: Sphinx) -> Dict[str, Any]:
 
 class SphinxDiagram:
     def __init__(self, argv: List[str] = sys.argv, **kwargs: Any):
-        default_filename = self.__class__.__name__
-        default_filename = re.sub(r"(?<!^)(?=[A-Z])", "-", default_filename).lower()
-
-        filename = argv[1] if len(argv) >= 2 else f"{default_filename}"
+        filename = argv[1] if len(argv) >= 2 else f"{Path(argv[0]).stem}"
         show = argv[2].lower() in {"True", "true"} if len(argv) >= 3 else True
         extra_args = argv[3] if len(argv) >= 4 else ""
         title = filename.replace("_", " ").replace("-", " ").title()

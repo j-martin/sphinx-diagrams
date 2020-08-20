@@ -5,7 +5,7 @@ This is a rough (incomplete, but working) Sphinx extension for
 issue for Sphinx support](https://github.com/mingrammer/diagrams/issues/2) for
 the latest up-to-date version when officially supported.
 
-## Example
+## Usage
 
 ### Adding the extension
 

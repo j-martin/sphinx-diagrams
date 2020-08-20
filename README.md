@@ -13,7 +13,7 @@ the latest up-to-date version when officially supported.
 
 ```conf.py
 extensions = [
-    "sphinx_diagrams.sphinx_diagrams",
+    "sphinx_diagrams",
 ]
 
 ```
@@ -31,6 +31,19 @@ from diagrams.gcp.compute import KubernetesEngine
 with Diagram("GKE", filename=sys.argv[1], show=sys.argv[2].lower() == 'true'):
     with Cluster("GCP Project"):
         KubernetesEngine("Primary Cluster")
+```
+
+or to handle the arguments automatically:
+
+```python
+from diagrams import Cluster
+from diagrams.k8s.compute import Deployment
+from sphinx_diagrams import SphinxDiagram
+
+with SphinxDiagram():
+    with Cluster("GCP Project"):
+        KubernetesEngine("Primary Cluster")
+
 ```
 
 Note that the extension will pass two arguments to your diagram script. The

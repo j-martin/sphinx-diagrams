@@ -1,7 +1,13 @@
+import re
+
+import sys
+
 import os
 import posixpath
 import subprocess
 from os import path
+
+from diagrams import Diagram, setdiagram
 from pathlib import Path
 from subprocess import CalledProcessError, PIPE
 from typing import Any, Dict, List, Tuple
@@ -192,3 +198,27 @@ def setup(app: Sphinx) -> Dict[str, Any]:
     app.add_node(diagrams, html=(html_visit_diagrams, None))
     app.add_directive("diagrams", Diagrams)
     return {"version": sphinx.__display_version__, "parallel_read_safe": True}
+
+
+class SphinxDiagram:
+    def __init__(self, argv: List[str] = sys.argv, **kwargs: Any):
+        default_filename = self.__class__.__name__
+        default_filename = re.sub(r"(?<!^)(?=[A-Z])", "-", default_filename).lower()
+
+        filename = argv[1] if len(argv) >= 2 else f"{default_filename}"
+        show = argv[2].lower() in {"True", "true"} if len(argv) >= 3 else True
+        extra_args = argv[3] if len(argv) >= 4 else ""
+        title = filename.replace("_", " ").replace("-", " ").title()
+
+        if 'title' in kwargs:
+            title = kwargs['title']
+            kwargs.pop('title')
+        _kwargs = {**kwargs, "show": show, "filename": filename}
+        self.diagram = Diagram(title, **_kwargs)
+
+    def __exit__(self, type, value, traceback):
+        self.diagram.render()
+
+    def __enter__(self):
+        setdiagram(self.diagram)
+        return self.diagram

@@ -108,6 +108,7 @@ def render_diagrams(
         python_args.extend(options[OPTION_EXTRA_ARGS].split(" "))
 
     env = os.environ
+    env['PYTHONPATH'] = f"{os.getcwd()}:{env.get('PYTHONPATH', '')}"
 
     try:
         ret = subprocess.run(

@@ -1,4 +1,5 @@
 import re
+import sys
 from typing import List
 
 from diagrams import Diagram
@@ -7,7 +8,7 @@ from diagrams import Diagram
 class DiagramsBase:
     title = None
 
-    def __init__(self, argv: List[str]):
+    def __init__(self, argv: List[str] = sys.argv):
         default_filename = self.__class__.__name__
         default_filename = re.sub(r"(?<!^)(?=[A-Z])", "-", default_filename).lower()
 

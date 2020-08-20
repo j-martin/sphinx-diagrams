@@ -50,3 +50,10 @@ Diagram - Deployment
   :filename: diagram-deployment.png
   :extra_args: will not be consumed by the example script above. Your script could though.
 ```
+
+## Credit
+
+This code is based on
+[sphinx.graphviz](https://github.com/buildthedocs/sphinx.graphviz/).
+
+SPDX-License-Identifier: BSD-2-Clause

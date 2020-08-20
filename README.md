@@ -1,2 +1,2 @@
 # sphinx-diagrams
-Rough Sphinx extension for 
+Rough Sphinx extension for Diagrams

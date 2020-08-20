@@ -31,7 +31,7 @@ class DiagramsError(SphinxError):
 
 class Diagrams(SphinxDirective):
     """
-    Directive to insert arbitrary dot markup.
+    Directive to insert arbitrary python markup.
     """
 
     has_content = True
@@ -132,18 +132,18 @@ def render_diagrams(
         return relfn, outfn
     except OSError:
         logger.warning(__("The diagram python code could not be run."))
-        if not hasattr(self.builder, "_diagrams_warned_dot"):
-            self.builder._diagrams_warned_dot = {}  # type: ignore
-        self.builder._diagrams_warned_dot["python"] = True  # type: ignore
+        if not hasattr(self.builder, "_diagrams_warned"):
+            self.builder._diagrams_warned = {}  # type: ignore
+        self.builder._diagrams_warned["python"] = True  # type: ignore
         return None, None
     except CalledProcessError as exc:
         raise DiagramsError(
-            __("dot exited with error:\n[stderr]\n%r\n" "[stdout]\n%r")
+            __("python exited with error:\n[stderr]\n%r\n" "[stdout]\n%r")
             % (exc.stderr, exc.stdout)
         )
 
 
-def render_dot_html(
+def render_html(
     self: HTMLTranslator,
     node: diagrams,
     code: str,
@@ -155,7 +155,7 @@ def render_dot_html(
     try:
         fname, outfn = render_diagrams(self, code, options, prefix)
     except DiagramsError as exc:
-        logger.warning(__("dot code %r: %s"), code, exc)
+        logger.warning(__("python code %r: %s"), code, exc)
         raise nodes.SkipNode
 
     if imgcls:
@@ -185,7 +185,7 @@ def render_dot_html(
 
 
 def html_visit_diagrams(self: HTMLTranslator, node: diagrams) -> None:
-    render_dot_html(self, node, node["code"], node["options"])
+    render_html(self, node, node["code"], node["options"])
 
 
 def setup(app: Sphinx) -> Dict[str, Any]:

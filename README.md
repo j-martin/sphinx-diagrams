@@ -29,8 +29,9 @@ extensions = [
 ### Adding the diagram (inline)
 
 The simplest way is to use `SphinxDiagram` and inline the code in your document.
-Consider using external python code as it is much faster to iterate and most
-likely better supported by your editor or IDE.
+Consider using an external diagram/python script (see below) as it has much
+shorter iteration loop than running sphinx and most likely better supported by
+your editor or IDE.
 
 `source/index.rst`
 

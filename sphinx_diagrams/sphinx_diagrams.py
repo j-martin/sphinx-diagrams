@@ -204,7 +204,14 @@ class SphinxDiagram:
             title = kwargs["title"]
             kwargs.pop("title")
         else:
-            title = filename.replace("_", " ").replace("-", " ").title()
+
+            title = (
+                filename.replace("diagram", "")
+                .replace("_", " ")
+                .replace("-", " ")
+                .replace("  ", " ")
+                .title()
+            )
 
         _kwargs = {**kwargs, "show": show, "filename": filename}
         self.diagram = Diagram(title, **_kwargs)

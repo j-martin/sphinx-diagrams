@@ -15,7 +15,7 @@ from docutils.parsers.rst import directives
 from sphinx.application import Sphinx
 from sphinx.errors import SphinxError
 from sphinx.locale import __
-from sphinx.util import logging
+from sphinx.util import logging, sha1
 from sphinx.util.docutils import SphinxDirective, SphinxTranslator
 from sphinx.util.i18n import search_image_for_language
 from sphinx.util.osutil import ensuredir
@@ -42,8 +42,8 @@ class Diagrams(SphinxDirective):
     option_spec = {"filename": directives.unchanged_required}
 
     def run(self) -> List[Node]:
+        document = self.state.document
         if self.arguments:
-            document = self.state.document
             if self.content:
                 return [
                     document.reporter.warning(
@@ -67,23 +67,33 @@ class Diagrams(SphinxDirective):
                         line=self.lineno,
                     )
                 ]
-            node = diagrams()
-            node["code"] = diagram_code
-            node["options"] = {"docname": self.env.docname}
-            if OPTION_FILENAME not in self.options:
-                inferred_filename = f"{Path(filename).stem}.png"
-                node["options"][OPTION_FILENAME] = inferred_filename
-                document.reporter.info(
-                    __(
-                        ":filename: argument not pass assuming "
-                        f"the output file is named.'{inferred_filename}'"
-                    ),
-                    line=self.lineno,
-                )
-            else:
-                node["options"][OPTION_FILENAME] = self.options[OPTION_FILENAME]
+        else:
+            diagram_code = "\n".join(self.content)
+            filename = self.env.docname + sha1(diagram_code.encode("utf-8")).hexdigest()
+            if not diagram_code.strip():
+                return [
+                    self.state_machine.reporter.warning(
+                        __('Ignoring "diagrams" directive without content.'),
+                        line=self.lineno,
+                    )
+                ]
+        node = diagrams()
+        node["code"] = diagram_code
+        node["options"] = {"docname": self.env.docname}
+        if OPTION_FILENAME not in self.options:
+            inferred_filename = f"{Path(filename).stem}.png"
+            node["options"][OPTION_FILENAME] = inferred_filename
+            document.reporter.info(
+                __(
+                    ":filename: argument not pass assuming "
+                    f"the output file is named.'{inferred_filename}'"
+                ),
+                line=self.lineno,
+            )
+        else:
+            node["options"][OPTION_FILENAME] = self.options[OPTION_FILENAME]
 
-            return [node]
+        return [node]
 
 
 class diagrams(nodes.General, nodes.Inline, nodes.Element):

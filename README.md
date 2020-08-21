@@ -26,12 +26,39 @@ extensions = [
 ]
 ```
 
-### Adding the diagram
+### Adding the diagram (inline)
+
+The simplest way is to use `SphinxDiagram` and inline the code in your document.
+Consider using external python code as it is much faster to iterate and most
+likely better supported by your editor or IDE.
+
+`source/index.rst`
+
+```rst
+Diagram - Deployment
+====================
+
+.. diagrams::
+  from diagrams import Cluster
+  from diagrams.k8s.compute import Deployment
+  from sphinx_diagrams import SphinxDiagram
+
+  with SphinxDiagram(title="GKE"):
+      with Cluster("GCP Project"):
+          KubernetesEngine("Primary Cluster")
+```
+
+
+### Adding a diagram (external python code)
+
+
+#### Write the code
 
 `source/diagrams_infrastructure.py`
 
-The simplest way is to use `SphinxDiagram` which wraps `Diagram`. This class handles arguments
-like `:filename:` and visibility (showing the diagram via `xdg-open/open`) for you.
+You can still use `SphinxDiagram` in your own code. This class handles arguments
+like `:filename:` and visibility (showing the diagram via `xdg-open/open`) for
+you.
 
 ```python
 from diagrams import Cluster
@@ -62,7 +89,7 @@ with Diagram("GKE", filename=sys.argv[1], show=sys.argv[2].lower() == 'true'):
 ```
 
 
-### Referencing the diagram
+#### Referencing the diagram
 
 `source/index.rst`
 

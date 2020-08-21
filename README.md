@@ -7,6 +7,15 @@ the latest up-to-date version when officially supported.
 
 ## Usage
 
+### Install
+
+The package is not currently published to pypi. As of 2020-08-20 you can install
+via git.
+
+```bash
+$ pip3 install 'git+https://github.com/j-martin/sphinx-diagrams.git'
+```
+
 ### Adding the extension
 
 `conf.py`
@@ -15,7 +24,6 @@ the latest up-to-date version when officially supported.
 extensions = [
     "sphinx_diagrams",
 ]
-
 ```
 
 ### Adding the diagram

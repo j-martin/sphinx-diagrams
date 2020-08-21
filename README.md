@@ -47,9 +47,9 @@ with SphinxDiagram():
 ```
 
 Note that the extension will pass two arguments to your diagram script. The
-first one is the `filename` (`sys.argv[1]`) it expects (it needs to match the one outputted by
-`diagrams`) and the value `false` as `sys.argv[2]`. The later can be used to
-tell your script not to show (open) the generate diagram.
+first one is the `filename` as `sys.argv[1]` it expects (it needs to match the
+one outputted by `diagrams`) and the value `false` as `sys.argv[2]`. The later
+can be used to tell your script not to show (open) the generate diagram.
 
 ### Referencing the diagram
 
@@ -61,9 +61,17 @@ Diagram - Deployment
 
 .. diagrams:: diagrams_infrastructure.py
   :filename: diagram-deployment.png
-  :extra_args: will not be consumed by the example script above. Your script could though.
 ```
 
+If the output file was `diagrams_infrastructure.png` then the :filename: is not
+necessary.
+
+```rst
+Diagram - Deployment
+====================
+
+.. diagrams:: diagrams_infrastructure.py
+```
 ## Credit
 
 This code is based on

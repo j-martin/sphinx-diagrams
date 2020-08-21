@@ -30,6 +30,26 @@ extensions = [
 
 `source/diagrams_infrastructure.py`
 
+The simplest way is to use `SphinxDiagram` which wraps `Diagram`. This class handles arguments
+like `:filename:` and visibility (showing the diagram via `xdg-open/open`) for you.
+
+```python
+from diagrams import Cluster
+from diagrams.k8s.compute import Deployment
+from sphinx_diagrams import SphinxDiagram
+
+with SphinxDiagram(title="GKE"):
+    with Cluster("GCP Project"):
+        KubernetesEngine("Primary Cluster")
+
+```
+
+Alternatively, you can use `Diagram` (from `diagrams`) directly. Note that the
+extension will pass two arguments to your diagram script. The first one is the
+`filename` as `sys.argv[1]` it expects (it needs to match the one outputted by
+`diagrams`) and the value `false` as `sys.argv[2]`. The later can be used to
+tell your script not to show (open) the generate diagram.
+
 ```python
 import sys
 
@@ -41,24 +61,6 @@ with Diagram("GKE", filename=sys.argv[1], show=sys.argv[2].lower() == 'true'):
         KubernetesEngine("Primary Cluster")
 ```
 
-Altenatively, use `SphinxDiagram` for a simpler. This class handles arguments
-like `:filename:` and visibility for you.
-
-```python
-from diagrams import Cluster
-from diagrams.k8s.compute import Deployment
-from sphinx_diagrams import SphinxDiagram
-
-with SphinxDiagram():
-    with Cluster("GCP Project"):
-        KubernetesEngine("Primary Cluster")
-
-```
-
-Note that the extension will pass two arguments to your diagram script. The
-first one is the `filename` as `sys.argv[1]` it expects (it needs to match the
-one outputted by `diagrams`) and the value `false` as `sys.argv[2]`. The later
-can be used to tell your script not to show (open) the generate diagram.
 
 ### Referencing the diagram
 

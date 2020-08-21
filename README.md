@@ -33,7 +33,8 @@ with Diagram("GKE", filename=sys.argv[1], show=sys.argv[2].lower() == 'true'):
         KubernetesEngine("Primary Cluster")
 ```
 
-or to handle the arguments automatically:
+Altenatively, use `SphinxDiagram` for a simpler. This class handles arguments
+like `:filename:` and visibility for you.
 
 ```python
 from diagrams import Cluster
@@ -63,8 +64,9 @@ Diagram - Deployment
   :filename: diagram-deployment.png
 ```
 
-If the output file was `diagrams_infrastructure.png` then the :filename: is not
-necessary.
+If using `SphinxDiagram` (above) or if the filename of the diagram script is the
+same as the output file (e.g.: `diagrams_infrastructure.py =>
+diagrams_infrastructure.png`) then the `:filename:` is not necessary.
 
 ```rst
 Diagram - Deployment

@@ -6,4 +6,5 @@ setup(
     description="",
     zip_safe=False,
     packages=find_packages(),
+    install_requires=["diagrams"],
 )

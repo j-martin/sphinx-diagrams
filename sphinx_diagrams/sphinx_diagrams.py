@@ -161,7 +161,6 @@ def render_html(
     options: Dict,
     prefix: str = "diagrams",
     imgcls: str = None,
-    alt: str = None,
 ) -> None:
     try:
         fname, outfn = render_diagrams(self, code, options, prefix)
@@ -174,19 +173,14 @@ def render_html(
     else:
         imgcls = "diagrams"
 
-    if fname is None:
-        self.body.append(self.encode(code))
-    else:
-        if alt is None:
-            alt = node.get("alt", self.encode(code).strip())
         if "align" in node:
             self.body.append(
                 '<div align="%s" class="align-%s">' % (node["align"], node["align"])
             )
         self.body.append('<div class="graphviz">')
         self.body.append(
-            '<a href="%s"><img src="%s" alt="%s" class="%s" /></a>'
-            % (fname, fname, alt, imgcls)
+        '<a href="%s"><img src="%s" class="%s" /></a>'
+        % (fname, fname, imgcls)
         )
         self.body.append("</div>\n")
         if "align" in node:

@@ -1,8 +1,11 @@
 [tool.poetry]
 name = "sphinx-diagrams"
-version = "0.2.0"
-description = ""
+version = "0.2.1"
+description = "Rendering Diagrams in Sphinx"
 authors = ["Jean-Martin Archer <jm@jmartin.ca>"]
+readme = "README.md"
+license = "Apache-2.0"
+repository = "https://github.com/j-martin/sphinx-diagrams"
 
 [tool.poetry.dependencies]
 python = "^3.6"

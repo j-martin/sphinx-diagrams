@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Poetry files
+poetry.toml
+
+# VSCode files
+.vscode

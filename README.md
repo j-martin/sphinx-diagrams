@@ -9,9 +9,6 @@ the latest up-to-date version when officially supported.
 
 ### Install
 
-The package is not currently published to pypi. As of 2020-08-20 you can install
-via git.
-
 ```bash
 $ pip3 install sphinx-diagrams
 ```

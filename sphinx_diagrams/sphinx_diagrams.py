@@ -119,7 +119,6 @@ def render_diagrams(
     python_args = [sys.executable, "-", Path(fname).stem, "false"]
 
     env = os.environ.copy()
-    env["PYTHONPATH"] = os.pathsep.join([os.getcwd(), env.get('PYTHONPATH', '')])
 
     try:
         ret = subprocess.run(

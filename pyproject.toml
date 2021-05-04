@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "sphinx-diagrams"
-version = "0.2.2"
+version = "0.3.0"
 description = "Rendering Diagrams in Sphinx"
 authors = ["Jean-Martin Archer <jm@jmartin.ca>"]
 readme = "README.md"

@@ -8,8 +8,8 @@ license = "BSD-2"
 repository = "https://github.com/j-martin/sphinx-diagrams"
 
 [tool.poetry.dependencies]
-python = "^3.6"
-diagrams = "^0.20.0"
+python = ">=3.6, <4.0"
+diagrams = ">=0.16.0"
 
 [tool.poetry.dev-dependencies]
 

@@ -171,7 +171,7 @@ def render_html(
     if imgcls:
         imgcls += " diagrams"
     else:
-        imgcls = "diagramss"
+        imgcls = "diagrams"
 
         if "align" in node:
             self.body.append(

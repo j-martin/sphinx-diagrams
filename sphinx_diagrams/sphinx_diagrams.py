@@ -20,6 +20,7 @@ from sphinx.util.docutils import SphinxDirective, SphinxTranslator
 from sphinx.util.i18n import search_image_for_language
 from sphinx.util.osutil import ensuredir
 from sphinx.writers.html import HTMLTranslator
+from sphinx.writers.latex import LaTeXTranslator
 
 OPTION_FILENAME = "filename"
 
@@ -187,13 +188,51 @@ def render_html(
 
     raise nodes.SkipNode
 
+def render_latex(
+    self: LaTeXTranslator,
+    node: diagrams,
+    code: str,
+    options: Dict,
+    prefix: str = "diagrams",
+    imgcls: str = None,
+) -> None:
+    try:
+        fname, outfn = render_diagrams(self, code, options, prefix)
+    except DiagramsError as exc:
+        logger.warning(__("python code %r: %s"), code, exc)
+        raise nodes.SkipNode
+
+    pre = ''
+    post = ''
+    if 'align' in node:
+        if node['align'] == 'left':
+            pre = '{'
+            post = r'\hspace*{\fill}}'
+        elif node['align'] == 'right':
+            pre = r'{\hspace*{\fill}'
+            post = '}'
+        elif node['align'] == 'center':
+            pre = r'{\hfill'
+            post = r'\hspace*{\fill}}'
+    self.body.append('\n%s' % pre)
+
+    self.body.append(r'\sphinxincludegraphics[]{%s}' % fname)
+    self.body.append('%s\n' % post)
+
+    raise nodes.SkipNode
+
 
 def html_visit_diagrams(self: HTMLTranslator, node: diagrams) -> None:
     render_html(self, node, node["code"], node["options"])
 
+def latex_visit_diagrams(self: LaTeXTranslator, node: diagrams) -> None:
+    render_latex(self, node, node['code'], node['options'])
+
 
 def setup(app: Sphinx) -> Dict[str, Any]:
-    app.add_node(diagrams, html=(html_visit_diagrams, None))
+    app.add_node(diagrams, 
+        html=(html_visit_diagrams, None),
+        latex=(latex_visit_diagrams, None))
     app.add_directive("diagrams", Diagrams)
     return {"version": sphinx.__display_version__, "parallel_read_safe": True}
 

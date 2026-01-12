@@ -2,6 +2,7 @@ import os
 import posixpath
 import subprocess
 import sys
+from hashlib import sha1
 from os import path
 from pathlib import Path
 from subprocess import CalledProcessError, PIPE
@@ -15,7 +16,7 @@ from docutils.parsers.rst import directives
 from sphinx.application import Sphinx
 from sphinx.errors import SphinxError
 from sphinx.locale import __
-from sphinx.util import logging, sha1
+from sphinx.util import logging
 from sphinx.util.docutils import SphinxDirective, SphinxTranslator
 from sphinx.util.i18n import search_image_for_language
 from sphinx.util.osutil import ensuredir
